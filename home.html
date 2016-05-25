@@ -1,0 +1,11 @@
+<h1>La liste des inscrits</h1>
+  <ul>
+    <li ng-repeat="inscription in inscriptions">{{inscription.prenom}} {{inscription.nom}} <button class="delete" ng-click="inscriptions.remove(inscription)">&times;</button>
+    <ul>
+        <li>{{inscription.mail}}</li>
+        <li>seance : {{inscription.seance}}</li>
+    </ul>
+
+   
+    </li>
+  </ul>

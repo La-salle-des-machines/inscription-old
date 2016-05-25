@@ -1,0 +1,110 @@
+<div class="container" ng-if="!recapitulatif">
+    <header>
+        <div class="menu">
+            <login-buttons></login-buttons>
+            <md-icon md-svg-src="images/icons/login.svg"></md-icon>
+         </div>
+    <h2>Les prochains rendez-vous</h2>
+    <p>Entrez vos coordonnées ci-dessous et inscrivez-vous dans la ou les activité(s) de votre choix.</p>
+
+    </header>
+    <form name="formulaireInscription" layout="row" layout-wrap>
+        <md-card flex=30>
+  <md-card-header>
+          <md-card-avatar>
+            <md-icon class="md-avatar-icon" md-svg-icon="images/icons/check.svg" ></md-icon>
+          </md-card-avatar>
+          <md-card-header-text>
+            <span class="md-title">Formulaire</span>
+            </md-card-header-text>
+        </md-card-header>
+     <md-card-content>
+
+<md-input-container>
+    <label>Adresse mail</label>
+    <input ng-model="inscription.mail" type="text" placeholder="{{inscription.mail || 'Mail'}}" select-on-click required/>
+</md-input-container>
+<md-input-container>
+    <label>Prénom de la participante ou du participant</label>
+    <input ng-model="inscription.prenom" type="text"
+             placeholder="{{inscription.prenom || 'Prénom'}}" select-on-click required/>
+ </md-input-container>
+ <md-input-container>
+     <label>Nom</label>
+         <input ng-model="inscription.nom" type="text"
+             placeholder="{{inscription.nom || 'Nom'}}" select-on-click required/>
+</md-input-container>
+</md-card-content>
+ <md-card-actions layout="row" layout-align="end center" ng-show="inscriptionFaite && formulaireInscription.$valid">
+          <md-button ng-click="recapitulons(inscription);">Récapitulatif</md-button>
+        </md-card-actions>
+</md-card>
+        
+        
+<md-card ng-repeat="planning in plannings | upComing:'date' | orderBy: 'date'" flex=30>
+            
+    <md-card-content>
+
+  <h3 >{{planning.titre || ''}}</h3>
+<h4 >{{planning.date | date:'fullDate'}}</h4>
+<h4>Lieu : {{planning.lieu}}</h4>
+
+ <table width="100%" >
+      <tr>
+          <td width="40%" align="left"><h4>Horaires</h4></td> 
+        <td width="20%" align="right"><h4>Places</h4></td>
+        <td width="30%"></td>
+
+      </tr>
+      <tr ng-repeat="horaire in planning.horaires" height="55px;">
+        <td width="40%" align="left" >{{horaire.creneau}}</td> 
+        <td width="20%" align="right" style="padding-right: 5px;" ng-show="(planning.places-horaire.inscrits)>0">{{planning.places-horaire.inscrits}}</td>
+        <td width="20%" align="right" style="padding-right: 5px;" ng-show="(planning.places-horaire.inscrits)<=0">COMPLET</td>
+        <td width="40%" align="right">
+            <md-button style="button"  
+                ng-show="formulaireInscription.$valid && !estInscrit(inscription, planning._id, horaire.creneau);" 
+                ng-click="inscriptionActivite(inscription, planning._id, horaire.creneau);" 
+                ng-disabled="inscritAutreCreneau(inscription, planning._id, formulaireInscription.$valid);"
+                >
+                Choisir
+            </md-button>
+            <md-button style="button"  
+                ng-show="formulaireInscription.$valid && estInscrit(inscription, planning._id, horaire.creneau);" 
+                ng-click="desinscriptionActivite(inscription, planning._id, horaire.creneau);"
+                >
+                désinscrire
+            </md-button>
+        </td>
+      </tr>
+      
+  </table>
+
+   </md-card-content>
+   
+    </md-card>
+    </form>
+</div>
+
+<div class="container" ng-if="recapitulatif">
+    <md-card flex=50>
+             <md-card-content>
+    <h3>Récapitulatif des inscriptions</h3>
+    <div>
+        Votre ou vos inscription(s) ont bien été enregistrée(s). {{inscription.prenom}} est inscrit à:
+    <md-list>
+  <md-list-item class="md-2-line" ng-repeat="inscription in listeInscriptions">
+       <div class="md-list-item-text">
+      <h3>{{inscription.titre}}</h3>
+      <p>le {{inscription.date | date:'fullDate'}} ; lieu: {{inscription.lieu}}<br /> horaire : {{inscription.horaire}}</p>
+    </div>
+  </md-list-item>
+</md-list>
+
+    </div>
+    </md-card-content>
+    <md-card-actions layout="row" layout-align="end center">
+        <md-button ng-click="envoieMail();showAlert()">Envoyer par mail</md-button>
+    <md-button ng-click="recapitulons(inscription);">Retour au formulaire d'inscription</md-button>
+    </md-card-actions>
+</md-card>
+</div>

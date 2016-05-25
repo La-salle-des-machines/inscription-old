@@ -1,0 +1,25 @@
+<div class="container">
+    
+    <h1>La liste des adhérents</h1>
+
+  <div layout="row" layout-wrap>
+
+  <md-card ng-repeat="adherent in adherents" flex="20" >
+  <md-card-content >
+   <h4>{{adherent.prenom}} {{adherent.nom}}</h4>
+   <div ng-repeat="singleInscription in adherent.inscriptions">
+       <p>{{singleInscription.id}}<span><button type="button" class="close" aria-hidden="true" ng-click="retraitInscription(adherent, singleInscription.id)">&times;</button></span></p>
+   </div>
+  
+ </md-card-content>
+ <md-card-actions layout="row" layout-align="end center">
+        <md-button ng-click="adherents.remove(adherent);">Effacer</md-button>
+      </md-card-actions>
+ </md-card>
+
+ 
+ 
+ </div>
+ 
+
+</div>

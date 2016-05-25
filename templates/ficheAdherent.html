@@ -1,0 +1,47 @@
+<div class="container">
+    <header>
+    <div class="menu" layout="row">
+            <login-buttons></login-buttons>
+            <md-button ng-click="miseaJour();">Mettre à jour le profile</md-button>
+            <md-button ng-click="effaceProfile();">Effacer le profile</md-button>
+    </div>
+    </header>
+ <div class="principal">
+    <div layout="row">
+        <h2 editable-text="ficheAdherent.nom" flex=50 onshow="selectAll($form)">{{ficheAdherent.nom || 'Nom du profile'}}</h2>
+        <md-radio-group ng-model="ficheAdherent.typeAdhesion" flex=30 layout="row">
+            <label flex=10>Adhesion</label>
+             <md-radio-button value="individuelle">Individuelle</md-radio-button>
+             <md-radio-button value="famille">Famille</md-radio-button>
+        </md-radio-group>
+    </div>
+    <div layout="row" layout-wrap>
+        <md-card ng-repeat="membre in ficheAdherent.membres track by membre.prenom" flex=25>
+            <md-card-content>
+            <h3 editable-text="membre.prenom" onshow="selectAll($form)">{{membre.prenom|| 'prénom'}}</h3>
+            <h4>Formations suivies</h4>
+            <div layout="row" layout-wrap>
+                <md-icon md-svg-src="images/icons/cnc.svg" style="height: 40px; width: 40px; background-color: #555555; color: white; padding: 4px; margin: 4px;"></md-icon>
+                <md-icon md-svg-src="images/icons/saw.svg"></md-icon>
+                <md-icon md-svg-src="images/icons/3Dprinter.svg"></md-icon>
+                <md-icon md-svg-src="images/icons/sculpture.svg">
+                    <md-tooltip md-direction="top">
+                    Terre
+                    </md-tooltip>
+                </md-icon>
+            </div>
+            </md-card-content>
+            <md-card-actions layout="row" layout-align="end center">
+                <md-button ng-click="effacerMembre(membre.id);">Effacer</md-button>
+            </md-card-actions>
+        </md-card>
+        <md-card flex=25>
+            <md-card-content>
+                <md-button ng-click="ajoutMembre();">Ajouter un membre</md-button>
+            </md-card-content>
+            
+        </md-card>
+    </div>
+     <div>{{ficheAdherent}}</div>
+ </div>   
+</div>

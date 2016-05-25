@@ -1,0 +1,23 @@
+<div class="container" layout="row" layout-wrap>
+    <div class="formActivite" flex=45>
+<h1>Création d'une nouvelle activité</h1>
+
+<md-input-container>
+         <input ng-model="nouvelleActivite.titre" type="text"
+             name="text" placeholder="Titre de l'activité" />
+ </md-input-container>
+
+<md-button type="button" ng-click="addActivite(nouvelleActivite); nouvelleActivite='';">Ajouter l'activité</md-button>
+</div>
+<div class="listeActivites" flex=45 layout="row" layout-wrap>
+    <md-card ng-repeat="activite in activites" flex=45>
+    <md-card-content>
+   <h2>{{activite.titre}}</h2>
+   </md-card-content>
+    <md-card-actions layout="row" layout-align="end center">
+        <md-button ng-click="activites.remove(activite)">Effacer</md-button>
+    </md-card-actions>
+    </md-card>
+    </div>
+ </div>
+ 

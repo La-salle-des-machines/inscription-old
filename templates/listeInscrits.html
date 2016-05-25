@@ -1,0 +1,26 @@
+<div class="container">
+    
+    <h1>La liste des inscrits</h1>
+
+  <div layout="row" layout-wrap>
+
+  <md-card ng-repeat="inscription in inscriptions" flex="20" >
+  <md-card-content >
+   <h2>{{inscription.prenom}} {{inscription.nom}}</h2>
+       <ul>
+        <li>{{inscription.mail}}</li>
+        <li>seance : {{inscription.seance}}</li>
+    </ul>
+ </md-card-content>
+ <md-card-actions layout="row" layout-align="end center">
+        <md-button ng-click="inscriptions.remove(inscription)">Effacer</md-button>
+        <md-button ng-click="addAdherent(inscription.nom, inscription.prenom)">Adhesion OK</md-button>
+      </md-card-actions>
+ </md-card>
+
+ 
+ 
+ </div>
+ 
+
+</div>

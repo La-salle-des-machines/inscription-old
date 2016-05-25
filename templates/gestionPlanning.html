@@ -1,0 +1,49 @@
+<div class="container">
+    <header>
+        <h1>Gestion du planning</h1>
+         <md-input-container flex=20>
+        <md-button ng-click="ajoutEvenement()">Ajouter un événement</md-button>
+        </md-input-container>
+        
+    </header>
+
+<div class="listePlanning" layout="row" layout-wrap>
+<md-card ng-repeat="planning in plannings" flex=30>
+            
+    <md-card-content>
+
+  <h4 editable-text="planning.titre" autoSelect="true" onshow="selectAll($form)" e-typeahead="activite.titre for activite in activites | filter:$viewValue | limitTo:8">
+       {{planning.titre || ''}}</h4>
+<h4 >{{planning.date | date:'fullDate'}}</h4>
+ <datepicker 
+        ng-model="planning.date" 
+        init-date="initDate"
+        class="well well-sm"></datepicker>
+<h4 editable-text="planning.lieu">{{planning.lieu || "La Bonne Fabrique"}}</h4>
+  <table width="100%" >
+      <tr>
+          <td width="30%" align="left"><h4>Horaires</h4></td> 
+        <td width="30%" align="right"><h4>Places</h4></td>
+        <td width="30%" align="right"><h4>Inscrits</h4></td>
+        <td width="10%" align="center"></td>
+      </tr>
+      <tr ng-repeat="horaire in planning.horaires" padding="2px">
+        <td width="30%" align="left"><a href="#" editable-text="horaire.creneau" flex=40 onshow="selectAll($form)">{{horaire.creneau}}</a></td> 
+        <td width="30%" align="right" >{{planning.places}}</td>
+        <td width="30%" align="right" >{{horaire.inscrits || "0"}}</td>
+        <td width="10%" align="center"><button type="button" class="close" aria-hidden="true" ng-click="retraitCreneau(planning, horaire.creneau, planning.inscrits)">&times;</button></td>
+      </tr>
+      
+  </table>
+
+
+   </md-card-content>
+    <md-card-actions layout="row" layout-align="end center">
+        <md-button ng-click="ajoutCreneau(planning)">Ajouter un créneau</md-button>
+       <md-button ng-click="plannings.remove(planning)">Effacer</md-button>
+    </md-card-actions>
+
+    </md-card>
+</div>
+
+</div>
